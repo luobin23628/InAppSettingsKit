@@ -26,11 +26,11 @@
 #import "IASKSpecifier.h"
 #import "IASKSpecifierValuesViewController.h"
 
-static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
-static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
-static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8;
-static const CGFloat PORTRAIT_KEYBOARD_HEIGHT = 216;
-static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
+static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3f;
+static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2f;
+static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8f;
+static const CGFloat PORTRAIT_KEYBOARD_HEIGHT = 216.0f;
+static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162.0f;
 
 static NSString *kIASKCredits = @"Powered by InAppSettingsKit"; // Leave this as-is!!!
 
@@ -326,7 +326,8 @@ static NSString *kIASKCredits = @"Powered by InAppSettingsKit"; // Leave this as
     else if ([[specifier type] isEqualToString:kIASKPSTitleValueSpecifier]) {
         UITableViewCell *cell = [[[IASKPSTitleValueSpecifierViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kIASKPSTitleValueSpecifier] autorelease];
         cell.textLabel.text = [specifier title];
-		id value = [[NSUserDefaults standardUserDefaults] objectForKey:key] ? : [specifier defaultValue];
+		id value = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+		if (value == nil) value = [specifier defaultValue];
 		
 		NSString *stringValue;
 		if ([specifier multipleValues] || [specifier multipleTitles]) {
