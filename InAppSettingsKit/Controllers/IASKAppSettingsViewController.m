@@ -134,7 +134,6 @@ CGRect IASKCGRectSwap(CGRect rect);
 		_tableView.frame = self.view.bounds;
     }
 	
-	self.navigationItem.rightBarButtonItem = nil;
     self.navigationController.delegate = self;
     if (_showDoneButton) {
         UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
