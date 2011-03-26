@@ -581,7 +581,7 @@ CGRect IASKCGRectSwap(CGRect rect);
             targetViewController = [[_viewList objectAtIndex:kIASKSpecifierValuesViewControllerIndex] objectForKey:@"viewController"];
         }
         self.currentIndexPath = indexPath;
-        [targetViewController setCurrentSpecifier:specifier];
+        targetViewController.currentSpecifier = specifier;
         targetViewController.settingsReader = self.settingsReader;
         targetViewController.settingsStore = self.settingsStore;
         [[self navigationController] pushViewController:targetViewController animated:YES];
