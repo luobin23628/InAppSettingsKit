@@ -59,6 +59,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 @synthesize showCreditsFooter = _showCreditsFooter;
 @synthesize showDoneButton = _showDoneButton;
 @synthesize settingsStore = _settingsStore;
+@synthesize specifierViewControllerClass = _specifierViewControllerClass;
 
 #pragma mark accessors
 - (IASKSettingsReader*)settingsReader {
@@ -99,6 +100,9 @@ CGRect IASKCGRectSwap(CGRect rect);
         
         // If set to YES, will add a DONE button at the right of the navigation bar
         _showDoneButton = YES;
+				
+				_specifierViewControllerClass = _specifierViewControllerClass ? _specifierViewControllerClass : [IASKSpecifierValuesViewController class];
+				
     }
     return self;
 }
@@ -111,6 +115,9 @@ CGRect IASKCGRectSwap(CGRect rect);
 	// if loaded via NIB, it's likely we sit in a TabBar- or NavigationController
 	// and thus don't need the Done button
 	_showDoneButton = NO;
+	
+	_specifierViewControllerClass = _specifierViewControllerClass ? _specifierViewControllerClass : [IASKSpecifierValuesViewController class];
+	
 }
 
 - (void)viewDidLoad {
@@ -571,7 +578,7 @@ CGRect IASKCGRectSwap(CGRect rect);
             NSMutableDictionary *newItemDict = [NSMutableDictionary dictionaryWithCapacity:3];
             [newItemDict addEntriesFromDictionary: [_viewList objectAtIndex:kIASKSpecifierValuesViewControllerIndex]];	// copy the title and explain strings
             
-            targetViewController = [[IASKSpecifierValuesViewController alloc] initWithNibName:@"IASKSpecifierValuesView" bundle:nil];
+            targetViewController = [[self.specifierViewControllerClass alloc] initWithNibName:@"IASKSpecifierValuesView" bundle:nil];
             // add the new view controller to the dictionary and then to the 'viewList' array
             [newItemDict setObject:targetViewController forKey:@"viewController"];
             [_viewList replaceObjectAtIndex:kIASKSpecifierValuesViewControllerIndex withObject:newItemDict];
