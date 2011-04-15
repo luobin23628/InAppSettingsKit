@@ -28,9 +28,9 @@
 #import "IASKSpecifierValuesViewController.h"
 #import "IASKTextField.h"
 
-static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
-static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
-static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8;
+static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3f;
+static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2f;
+static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8f;
 
 static NSString *kIASKCredits = @"Powered by InAppSettingsKit"; // Leave this as-is!!!
 
@@ -789,7 +789,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
-		[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+		[UIView setAnimationCurve:(UIViewAnimationCurve)[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
 		_tableView.frame = frame;
 		[UIView commitAnimations];
 		
@@ -815,7 +815,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 		
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
-		[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+		[UIView setAnimationCurve:(UIViewAnimationCurve)[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
 		_tableView.frame = self.view.bounds;
 		[UIView commitAnimations];
 		
