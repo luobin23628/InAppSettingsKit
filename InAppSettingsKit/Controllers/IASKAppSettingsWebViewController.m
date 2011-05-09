@@ -22,7 +22,7 @@
 @synthesize webView;
 
 - (id)initWithFile:(NSString*)urlString key:(NSString*)key {
-	if (!(self = [super initWithNibName:nil bundle:nil])) {
+	if (!(self = [self initWithNibName:nil bundle:nil])) {
 		return nil;
 	}
 	
