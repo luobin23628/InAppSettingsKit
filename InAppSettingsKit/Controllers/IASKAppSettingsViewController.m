@@ -28,9 +28,9 @@
 #import "IASKSpecifierValuesViewController.h"
 #import "IASKTextField.h"
 
-static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
-static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
-static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8;
+static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3f;
+static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2f;
+static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8f;
 
 static NSString *kIASKCredits = @"Powered by InAppSettingsKit"; // Leave this as-is!!!
 
@@ -59,6 +59,8 @@ CGRect IASKCGRectSwap(CGRect rect);
 @synthesize showCreditsFooter = _showCreditsFooter;
 @synthesize showDoneButton = _showDoneButton;
 @synthesize settingsStore = _settingsStore;
+@synthesize specifierViewControllerClass = _specifierViewControllerClass;
+@synthesize switchSpecifierCellClass = _switchSpecifierCellClass;
 
 #pragma mark accessors
 - (IASKSettingsReader*)settingsReader {
@@ -99,6 +101,10 @@ CGRect IASKCGRectSwap(CGRect rect);
         
         // If set to YES, will add a DONE button at the right of the navigation bar
         _showDoneButton = YES;
+				
+				_specifierViewControllerClass = _specifierViewControllerClass ? _specifierViewControllerClass : [IASKSpecifierValuesViewController class];
+				_switchSpecifierCellClass = _switchSpecifierCellClass ? _switchSpecifierCellClass : [IASKPSToggleSwitchSpecifierViewCell class];
+				
     }
     return self;
 }
@@ -111,6 +117,9 @@ CGRect IASKCGRectSwap(CGRect rect);
 	// if loaded via NIB, it's likely we sit in a TabBar- or NavigationController
 	// and thus don't need the Done button
 	_showDoneButton = NO;
+	
+	_specifierViewControllerClass = _specifierViewControllerClass ? _specifierViewControllerClass : [IASKSpecifierValuesViewController class];
+	
 }
 
 - (void)viewDidLoad {
@@ -252,7 +261,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 }
 
 - (void)toggledValue:(id)sender {
-    IASKSwitch *toggle    = (IASKSwitch*)sender;
+    UISwitch<IASKSwitchCustomizing> *toggle    = (UISwitch<IASKSwitchCustomizing> *)sender;
     IASKSpecifier *spec   = [_settingsReader specifierForKey:[toggle key]];
     
     if ([toggle isOn]) {
@@ -372,9 +381,9 @@ CGRect IASKCGRectSwap(CGRect rect);
     
     if ([[specifier type] isEqualToString:kIASKPSToggleSwitchSpecifier]) {
         IASKPSToggleSwitchSpecifierViewCell *cell = (IASKPSToggleSwitchSpecifierViewCell*)[tableView dequeueReusableCellWithIdentifier:[specifier type]];
-        
+				
         if (!cell) {
-            cell = (IASKPSToggleSwitchSpecifierViewCell*) [[[NSBundle mainBundle] loadNibNamed:@"IASKPSToggleSwitchSpecifierViewCell" 
+            cell = (IASKPSToggleSwitchSpecifierViewCell*) [[[NSBundle bundleForClass:[self class]] loadNibNamed:NSStringFromClass(_switchSpecifierCellClass) 
 																					   owner:self 
 																					 options:nil] objectAtIndex:0];
         }
@@ -571,7 +580,7 @@ CGRect IASKCGRectSwap(CGRect rect);
             NSMutableDictionary *newItemDict = [NSMutableDictionary dictionaryWithCapacity:3];
             [newItemDict addEntriesFromDictionary: [_viewList objectAtIndex:kIASKSpecifierValuesViewControllerIndex]];	// copy the title and explain strings
             
-            targetViewController = [[IASKSpecifierValuesViewController alloc] initWithNibName:@"IASKSpecifierValuesView" bundle:nil];
+            targetViewController = [[self.specifierViewControllerClass alloc] initWithNibName:@"IASKSpecifierValuesView" bundle:nil];
             // add the new view controller to the dictionary and then to the 'viewList' array
             [newItemDict setObject:targetViewController forKey:@"viewController"];
             [_viewList replaceObjectAtIndex:kIASKSpecifierValuesViewControllerIndex withObject:newItemDict];
@@ -789,7 +798,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
-		[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+		[UIView setAnimationCurve:(UIViewAnimationCurve)[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
 		_tableView.frame = frame;
 		[UIView commitAnimations];
 		
@@ -815,7 +824,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 		
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
-		[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+		[UIView setAnimationCurve:(UIViewAnimationCurve)[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
 		_tableView.frame = self.view.bounds;
 		[UIView commitAnimations];
 		
