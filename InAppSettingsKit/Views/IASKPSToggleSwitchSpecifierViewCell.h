@@ -17,13 +17,11 @@
 #import <UIKit/UIKit.h>
 
 @class IASKSwitch;
+@protocol IASKSwitchCustomizing;
 
-@interface IASKPSToggleSwitchSpecifierViewCell : UITableViewCell {
-    IBOutlet UILabel    *_label;
-    IBOutlet IASKSwitch   *_toggle;
-}
+@interface IASKPSToggleSwitchSpecifierViewCell : UITableViewCell
 
-@property (nonatomic, readonly) UILabel     *label;
-@property (nonatomic, readonly) IASKSwitch    *toggle;
+@property (nonatomic, readonly) IBOutlet UILabel     *label;
+@property (nonatomic, readonly) IBOutlet UIControl<IASKSwitchCustomizing>    *toggle;
 
 @end

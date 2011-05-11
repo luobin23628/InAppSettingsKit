@@ -65,6 +65,7 @@
 @property (nonatomic, assign) BOOL showDoneButton;
 
 @property (nonatomic, assign) Class specifierViewControllerClass;// = IASKSpecifierValuesViewController
+@property (nonatomic, assign) Class switchSpecifierCellClass;// = IASKPSToggleSwitchSpecifierViewCell
 
 - (void)synchronizeSettings;
 - (IBAction)dismiss:(id)sender;

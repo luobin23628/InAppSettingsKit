@@ -60,6 +60,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 @synthesize showDoneButton = _showDoneButton;
 @synthesize settingsStore = _settingsStore;
 @synthesize specifierViewControllerClass = _specifierViewControllerClass;
+@synthesize switchSpecifierCellClass = _switchSpecifierCellClass;
 
 #pragma mark accessors
 - (IASKSettingsReader*)settingsReader {
@@ -102,6 +103,7 @@ CGRect IASKCGRectSwap(CGRect rect);
         _showDoneButton = YES;
 				
 				_specifierViewControllerClass = _specifierViewControllerClass ? _specifierViewControllerClass : [IASKSpecifierValuesViewController class];
+				_switchSpecifierCellClass = _switchSpecifierCellClass ? _switchSpecifierCellClass : [IASKPSToggleSwitchSpecifierViewCell class];
 				
     }
     return self;
@@ -259,7 +261,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 }
 
 - (void)toggledValue:(id)sender {
-    IASKSwitch *toggle    = (IASKSwitch*)sender;
+    UISwitch<IASKSwitchCustomizing> *toggle    = (UISwitch<IASKSwitchCustomizing> *)sender;
     IASKSpecifier *spec   = [_settingsReader specifierForKey:[toggle key]];
     
     if ([toggle isOn]) {
@@ -379,9 +381,9 @@ CGRect IASKCGRectSwap(CGRect rect);
     
     if ([[specifier type] isEqualToString:kIASKPSToggleSwitchSpecifier]) {
         IASKPSToggleSwitchSpecifierViewCell *cell = (IASKPSToggleSwitchSpecifierViewCell*)[tableView dequeueReusableCellWithIdentifier:[specifier type]];
-        
+				
         if (!cell) {
-            cell = (IASKPSToggleSwitchSpecifierViewCell*) [[[NSBundle mainBundle] loadNibNamed:@"IASKPSToggleSwitchSpecifierViewCell" 
+            cell = (IASKPSToggleSwitchSpecifierViewCell*) [[[NSBundle bundleForClass:[self class]] loadNibNamed:NSStringFromClass(_switchSpecifierCellClass) 
 																					   owner:self 
 																					 options:nil] objectAtIndex:0];
         }
