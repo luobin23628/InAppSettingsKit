@@ -20,6 +20,8 @@
 @protocol IASKSwitchCustomizing
 
 @property (nonatomic, retain) NSString *key;
+- (void) setOn:(BOOL)flag;
+- (void) setOn:(BOOL)flag animated:(BOOL)flag;
 
 @end
 
