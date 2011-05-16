@@ -16,15 +16,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class IASKSlider;
+@protocol IASKSliderCustomizing;
 
 @interface IASKPSSliderSpecifierViewCell : UITableViewCell {
-    IBOutlet IASKSlider       *_slider;
+    IBOutlet UISlider<IASKSliderCustomizing>       *_slider;
     IBOutlet UIImageView    *_minImage;
     IBOutlet UIImageView    *_maxImage;
 }
 
-@property (nonatomic, readonly) IASKSlider    *slider;
+@property (nonatomic, readonly) UISlider<IASKSliderCustomizing>    *slider;
 @property (nonatomic, readonly) UIImageView *minImage;
 @property (nonatomic, readonly) UIImageView *maxImage;
 

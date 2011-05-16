@@ -17,10 +17,12 @@
 #import <UIKit/UIKit.h>
 
 
-@interface IASKSlider : UISlider {
-    NSString *_key;
-}
+@protocol IASKSliderCustomizing
 
 @property (nonatomic, retain) NSString *key;
+
+@end
+
+@interface IASKSlider : UISlider <IASKSliderCustomizing>
 
 @end

@@ -61,6 +61,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 @synthesize settingsStore = _settingsStore;
 @synthesize specifierViewControllerClass = _specifierViewControllerClass;
 @synthesize switchSpecifierCellClass = _switchSpecifierCellClass;
+@synthesize sliderSpecifierCellClass = _sliderSpecifierCellClass;
 
 #pragma mark accessors
 - (IASKSettingsReader*)settingsReader {
@@ -104,6 +105,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 				
 				_specifierViewControllerClass = _specifierViewControllerClass ? _specifierViewControllerClass : [IASKSpecifierValuesViewController class];
 				_switchSpecifierCellClass = _switchSpecifierCellClass ? _switchSpecifierCellClass : [IASKPSToggleSwitchSpecifierViewCell class];
+				_sliderSpecifierCellClass = _sliderSpecifierCellClass ? _sliderSpecifierCellClass : [IASKPSSliderSpecifierViewCell class];
 				
     }
     return self;
@@ -288,7 +290,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 }
 
 - (void)sliderChangedValue:(id)sender {
-    IASKSlider *slider = (IASKSlider*)sender;
+    UISlider<IASKSliderCustomizing> *slider = (UISlider<IASKSliderCustomizing>*)sender;
     [self.settingsStore setFloat:[slider value] forKey:[slider key]];
     [[NSNotificationCenter defaultCenter] postNotificationName:kIASKAppSettingChanged
                                                         object:[slider key]
@@ -479,7 +481,7 @@ CGRect IASKCGRectSwap(CGRect rect);
         IASKPSSliderSpecifierViewCell *cell = (IASKPSSliderSpecifierViewCell*)[tableView dequeueReusableCellWithIdentifier:[specifier type]];
         
         if (!cell) {
-            cell = (IASKPSSliderSpecifierViewCell*) [[[NSBundle mainBundle] loadNibNamed:@"IASKPSSliderSpecifierViewCell" 
+            cell = (IASKPSSliderSpecifierViewCell*) [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(_sliderSpecifierCellClass) 
 																				 owner:self 
 																			   options:nil] objectAtIndex:0];
 		}

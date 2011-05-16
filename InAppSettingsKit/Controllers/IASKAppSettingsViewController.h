@@ -64,8 +64,9 @@
 @property (nonatomic, assign) BOOL showCreditsFooter;
 @property (nonatomic, assign) BOOL showDoneButton;
 
-@property (nonatomic, assign) Class specifierViewControllerClass;// = IASKSpecifierValuesViewController
-@property (nonatomic, assign) Class switchSpecifierCellClass;// = IASKPSToggleSwitchSpecifierViewCell
+@property (nonatomic, assign) Class specifierViewControllerClass;	// = IASKSpecifierValuesViewController
+@property (nonatomic, assign) Class switchSpecifierCellClass;	// = IASKPSToggleSwitchSpecifierViewCell
+@property (nonatomic, assign) Class sliderSpecifierCellClass;	// = IASKPSSliderSpecifierViewCell
 
 - (void)synchronizeSettings;
 - (IBAction)dismiss:(id)sender;
