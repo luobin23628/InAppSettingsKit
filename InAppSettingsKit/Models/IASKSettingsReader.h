@@ -46,6 +46,8 @@
 #define kIASKKeyboardAlphabet                 @"Alphabet"
 #define kIASKKeyboardNumbersAndPunctuation    @"NumbersAndPunctuation"
 #define kIASKKeyboardNumberPad                @"NumberPad"
+#define kIASKKeyboardDecimalPad               @"DecimalPad"
+
 #define KIASKKeyboardURL                      @"URL"
 #define kIASKKeyboardEmailAddress             @"EmailAddress"
 #define kIASKAutoCapNone                      @"None"
@@ -98,12 +100,16 @@
 #define kCFCoreFoundationVersionNumber_iPhoneOS_4_0 550.32
 #endif
 
+#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_4_1
+#define kCFCoreFoundationVersionNumber_iPhoneOS_4_1 550.38
+#endif
+
+
 #define IASK_IF_IOS4_OR_GREATER(...) \
 if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iPhoneOS_4_0) \
 { \
 __VA_ARGS__ \
 }
-
 
 @class IASKSpecifier;
 

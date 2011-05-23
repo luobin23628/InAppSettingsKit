@@ -29,7 +29,7 @@
 @synthesize settingsReader = _settingsReader;
 
 - (id)initWithSpecifier:(NSDictionary*)specifier {
-    if ([super init]) {
+    if ((self = [super init])) {
         [self setSpecifierDict:specifier];
         
         if ([[self type] isEqualToString:kIASKPSMultiValueSpecifier] ||
@@ -41,8 +41,9 @@
 }
 
 - (void)dealloc {
-    [_specifierDict release];
-    [_multipleValuesDict release];
+    [_specifierDict release], _specifierDict = nil;
+    [_multipleValuesDict release], _multipleValuesDict = nil;
+	
 	_settingsReader = nil;
 
     [super dealloc];
@@ -189,6 +190,14 @@
     }
     else if ([[_specifierDict objectForKey:KIASKKeyboardType] isEqualToString:kIASKKeyboardNumberPad]) {
         return UIKeyboardTypeNumberPad;
+    }
+    else if ([[_specifierDict objectForKey:KIASKKeyboardType] isEqualToString:kIASKKeyboardDecimalPad]) {
+		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iPhoneOS_4_1) {
+			return UIKeyboardTypeDecimalPad;
+		}
+		else {
+			return UIKeyboardTypeNumbersAndPunctuation;
+		}
     }
     else if ([[_specifierDict objectForKey:KIASKKeyboardType] isEqualToString:KIASKKeyboardURL]) {
         return UIKeyboardTypeURL;

@@ -47,13 +47,18 @@ dataSource=_dataSource;
         _bundle = [[NSBundle bundleWithPath:[self bundlePath]] retain];
         
 		// Look for localization file
-		self.localizationTable = [[[[self.path stringByDeletingPathExtension] // removes '.plist'
-									stringByDeletingPathExtension] // removes potential '.inApp'
-								   lastPathComponent] // strip absolute path
-								  stringByReplacingOccurrencesOfString:[self platformSuffix] withString:@""]; // removes potential '~device' (~ipad, ~iphone)
-		if([_bundle pathForResource:self.localizationTable ofType:@"strings"] == nil){
-			// Could not find the specified localization: use default
-			self.localizationTable = @"Root";
+		self.localizationTable = [self.settingsBundle objectForKey:@"StringsTable"];
+		if (!self.localizationTable)
+		{
+			// Look for localization file using filename
+			self.localizationTable = [[[[self.path stringByDeletingPathExtension] // removes '.plist'
+										stringByDeletingPathExtension] // removes potential '.inApp'
+									   lastPathComponent] // strip absolute path
+									  stringByReplacingOccurrencesOfString:[self platformSuffix] withString:@""]; // removes potential '~device' (~ipad, ~iphone)
+			if([_bundle pathForResource:self.localizationTable ofType:@"strings"] == nil){
+				// Could not find the specified localization: use default
+				self.localizationTable = @"Root";
+			}
 		}
 
         if (_settingsBundle) {
@@ -64,12 +69,13 @@ dataSource=_dataSource;
 }
 
 - (void)dealloc {
-    [_path release];
-	[_localizationTable release];
-	[_bundlePath release];
-    [_settingsBundle release];
-    [_dataSource release];
-    [_bundle release];
+    [_path release], _path = nil;
+	[_localizationTable release], _localizationTable = nil;
+	[_bundlePath release], _bundlePath = nil;
+    [_settingsBundle release], _settingsBundle = nil;
+    [_dataSource release], _dataSource = nil;
+    [_bundle release], _bundle = nil;
+
     [super dealloc];
 }
 
