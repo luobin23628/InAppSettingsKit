@@ -94,26 +94,25 @@ dataSource=_dataSource;
             sectionCount++;
         }
         else {
-            if (sectionCount == -1) {
-                NSMutableArray *newArray = [[NSMutableArray alloc] init];
-				[dataSource addObject:newArray];
-				[newArray release];
-				sectionCount++;
-			}
-
-            IASKSpecifier *newSpecifier = [[IASKSpecifier alloc] initWithSpecifier:specifier];
-            [(NSMutableArray*)[dataSource objectAtIndex:sectionCount] addObject:newSpecifier];
-            [newSpecifier release];
+					if (sectionCount == -1) {
+						NSMutableArray *newArray = [[NSMutableArray alloc] init];
+						[dataSource addObject:newArray];
+						[newArray release];
+						sectionCount++;
+					}
+					IASKSpecifier *newSpecifier = [[IASKSpecifier alloc] initWithSpecifier:specifier];
+					[(NSMutableArray*)[dataSource objectAtIndex:(NSUInteger)sectionCount] addObject:newSpecifier];
+					[newSpecifier release];
         }
     }
     [self setDataSource:dataSource];
 }
 
-- (BOOL)_sectionHasHeading:(NSInteger)section {
+- (BOOL)_sectionHasHeading:(NSUInteger)section {
     return [[[[self dataSource] objectAtIndex:section] objectAtIndex:0] isKindOfClass:[NSDictionary class]];
 }
 
-- (NSInteger)numberOfSections {
+- (NSUInteger)numberOfSections {
     return [[self dataSource] count];
 }
 

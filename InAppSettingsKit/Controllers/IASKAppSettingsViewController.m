@@ -301,12 +301,12 @@ CGRect IASKCGRectSwap(CGRect rect);
 #pragma mark -
 #pragma mark UITableView Functions
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSUInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	return [self.settingsReader numberOfSections];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.settingsReader numberOfRowsForSection:section];
+- (NSUInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSUInteger)section {
+    return [self.settingsReader numberOfRowsForSection:(NSInteger)section];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -322,7 +322,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 }
 
 - (NSString *)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section {
-    NSString *header = [self.settingsReader titleForSection:section];
+	NSString *header = [self.settingsReader titleForSection:section];
 	if (0 == header.length) {
 		return nil;
 	}
@@ -360,7 +360,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
 	NSString *footerText = [self.settingsReader footerTextForSection:section];
-	if (_showCreditsFooter && (section == [self.settingsReader numberOfSections]-1)) {
+	if (_showCreditsFooter && (section == (NSInteger)[self.settingsReader numberOfSections]-1)) {
 		// show credits since this is the last section
 		if ((footerText == nil) || ([footerText length] == 0)) {
 			// show the credits on their own

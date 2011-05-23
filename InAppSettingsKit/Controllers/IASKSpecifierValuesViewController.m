@@ -34,8 +34,7 @@
 @synthesize settingsStore = _settingsStore;
 
 - (void) updateCheckedItem {
-    NSInteger index;
-	
+    NSUInteger index;
 	// Find the currently checked item
     if([self.settingsStore objectForKey:[_currentSpecifier key]]) {
       index = [[_currentSpecifier multipleValues] indexOfObject:[self.settingsStore objectForKey:[_currentSpecifier key]]];

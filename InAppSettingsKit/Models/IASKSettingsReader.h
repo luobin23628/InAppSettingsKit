@@ -94,7 +94,7 @@
 #define kIASKVerticalPaddingGroupTitles       15
 
 #define kIASKLabelFontSize                    17
-#define kIASKgrayBlueColor                    [UIColor colorWithRed:0.318 green:0.4 blue:0.569 alpha:1.0]
+#define kIASKgrayBlueColor                    [UIColor colorWithRed:0.318f green:0.4f blue:0.569f alpha:1.0f]
 
 #ifndef kCFCoreFoundationVersionNumber_iPhoneOS_4_0
 #define kCFCoreFoundationVersionNumber_iPhoneOS_4_0 550.32
@@ -123,8 +123,8 @@ __VA_ARGS__ \
 }
 
 - (id)initWithFile:(NSString*)file;
-- (NSInteger)numberOfSections;
-- (NSInteger)numberOfRowsForSection:(NSInteger)section;
+- (NSUInteger)numberOfSections;
+- (NSUInteger)numberOfRowsForSection:(NSInteger)section;
 - (IASKSpecifier*)specifierForIndexPath:(NSIndexPath*)indexPath;
 - (IASKSpecifier*)specifierForKey:(NSString*)key;
 - (NSString*)titleForSection:(NSInteger)section;
