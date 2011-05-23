@@ -52,6 +52,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 @implementation IASKAppSettingsViewController
 
 @synthesize delegate = _delegate;
+@synthesize tableView = _tableView;
 @synthesize currentIndexPath=_currentIndexPath;
 @synthesize settingsReader = _settingsReader;
 @synthesize file = _file;
@@ -96,7 +97,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 
 #pragma mark standard view controller methods
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ([super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         // If set to YES, will display credits for InAppSettingsKit creators
         _showCreditsFooter = YES;
         
@@ -135,9 +136,8 @@ CGRect IASKCGRectSwap(CGRect rect);
 }
 
 - (void)viewDidUnload {
-
-	[super viewDidUnload];
-
+	self.tableView = nil;
+	[_viewList release], _viewList = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -231,16 +231,15 @@ CGRect IASKCGRectSwap(CGRect rect);
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_viewList release];
-    [_currentIndexPath release];
-	[_file release];
-	_file = nil;
+
+    [_viewList release], _viewList = nil;
+    [_currentIndexPath release], _currentIndexPath = nil;
+	[_file release], _file = nil;
+	[_currentFirstResponder release], _currentFirstResponder = nil;
+	[_settingsReader release], _settingsReader = nil;
+    [_settingsStore release], _settingsStore = nil;
+	[_tableView release], _tableView = nil;
 	
-	[_currentFirstResponder release];
-	_currentFirstResponder = nil;
-	
-    [_settingsReader release];
-    [_settingsStore release];
 	_delegate = nil;
 
     [super dealloc];
@@ -664,10 +663,17 @@ CGRect IASKCGRectSwap(CGRect rect);
 		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:specifier.file]];    
     } else if ([[specifier type] isEqualToString:kIASKButtonSpecifier]) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-		Class buttonClass = [specifier buttonClass];
-		SEL buttonAction = [specifier buttonAction];
-		if ([buttonClass respondsToSelector:buttonAction]) {
-			[buttonClass performSelector:buttonAction withObject:self withObject:[specifier key]];
+		if ([self.delegate respondsToSelector:@selector(settingsViewController:buttonTappedForKey:)]) {
+			[self.delegate settingsViewController:self buttonTappedForKey:[specifier key]];
+		} else {
+			// legacy code, provided for backward compatibility
+			// the delegate mechanism above is much cleaner and doesn't leak
+			Class buttonClass = [specifier buttonClass];
+			SEL buttonAction = [specifier buttonAction];
+			if ([buttonClass respondsToSelector:buttonAction]) {
+				[buttonClass performSelector:buttonAction withObject:self withObject:[specifier key]];
+				NSLog(@"InAppSettingsKit Warning: Using IASKButtonSpecifier without implementing the delegate method is deprecated");
+			}
 		}
     } else if ([[specifier type] isEqualToString:kIASKMailComposeSpecifier]) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
