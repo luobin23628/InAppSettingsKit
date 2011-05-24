@@ -606,26 +606,32 @@ CGRect IASKCGRectSwap(CGRect rect);
     }
     else if ([[specifier type] isEqualToString:kIASKPSChildPaneSpecifier]) {
 
-        
-        Class vcClass = [specifier viewControllerClass];
-        if (vcClass) {
-            SEL initSelector = [specifier viewControllerSelector];
-            if (!initSelector) {
-                initSelector = @selector(init);
-            }
-            UIViewController * vc = [vcClass alloc];
-            [vc performSelector:initSelector withObject:[specifier file] withObject:[specifier key]];
-			if ([vc respondsToSelector:@selector(setDelegate:)]) {
-				[vc performSelector:@selector(setDelegate:) withObject:self.delegate];
+			Class vcClass = [specifier viewControllerClass];
+			if (vcClass) {
+			
+				SEL initSelector = [specifier viewControllerSelector];
+				
+				if (!initSelector) {
+					initSelector = @selector(init);
+				}
+				
+				UIViewController * vc = [[vcClass performSelector:@selector(alloc)] performSelector:initSelector withObject:[specifier file] withObject:[specifier key]];
+				
+				if ([vc respondsToSelector:@selector(setDelegate:)]) {
+					[vc performSelector:@selector(setDelegate:) withObject:self.delegate];
+				}
+				
+				if ([vc respondsToSelector:@selector(setSettingsStore:)]) {
+					[vc performSelector:@selector(setSettingsStore:) withObject:self.settingsStore];
+				}
+				
+				self.navigationController.delegate = nil;
+				[self.navigationController pushViewController:vc animated:YES];
+				[vc performSelector:@selector(release)];
+				
+				return;
+			
 			}
-			if ([vc respondsToSelector:@selector(setSettingsStore:)]) {
-				[vc performSelector:@selector(setSettingsStore:) withObject:self.settingsStore];
-			}
-			self.navigationController.delegate = nil;
-            [self.navigationController pushViewController:vc animated:YES];
-            [vc release];
-            return;
-        }
         
         if (nil == [specifier file]) {
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
