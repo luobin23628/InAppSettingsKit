@@ -116,7 +116,7 @@ dataSource=_dataSource;
     return [[self dataSource] count];
 }
 
-- (NSInteger)numberOfRowsForSection:(NSInteger)section {
+- (NSUInteger)numberOfRowsForSection:(NSInteger)section {
     int headingCorrection = [self _sectionHasHeading:section] ? 1 : 0;
     return [(NSArray*)[[self dataSource] objectAtIndex:section] count] - headingCorrection;
 }

@@ -33,7 +33,7 @@
 - (NSString*)key;
 - (NSString*)type;
 - (NSString*)titleForCurrentValue:(id)currentValue;
-- (NSInteger)multipleValuesCount;
+- (NSUInteger)multipleValuesCount;
 - (NSArray*)multipleValues;
 - (NSArray*)multipleTitles;
 - (NSString*)file;

@@ -107,7 +107,7 @@
 	if (values.count != titles.count) {
 		return nil;
 	}
-    NSInteger keyIndex = [values indexOfObject:currentValue];
+	NSUInteger keyIndex = [values indexOfObject:currentValue];
 	if (keyIndex == NSNotFound) {
 		return nil;
 	}
@@ -118,7 +118,7 @@
 	return nil;
 }
 
-- (NSInteger)multipleValuesCount {
+- (NSUInteger)multipleValuesCount {
     return [[_multipleValuesDict objectForKey:kIASKValues] count];
 }
 
