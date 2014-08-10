@@ -27,6 +27,7 @@
 
         // TextField
         _textField = [[IASKTextField alloc] initWithFrame:CGRectMake(0, 0, 200, self.frame.size.height)];
+        _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _textField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin;
         _textField.font = [UIFont systemFontOfSize:17.0f];
         _textField.minimumFontSize = kIASKMinimumFontSize;

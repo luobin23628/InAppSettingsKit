@@ -220,7 +220,17 @@
     else if ([[_specifierDict objectForKey:KIASKKeyboardType] isEqualToString:kIASKKeyboardEmailAddress]) {
         return UIKeyboardTypeEmailAddress;
     }
-    return UIKeyboardTypeDefault;
+    NSString *keyboardTypeStr = [_specifierDict objectForKey:KIASKKeyboardType];
+    if (!keyboardTypeStr) {
+        return UIKeyboardTypeDefault;
+    }
+    char *pos;
+    int keyboard = strtol(keyboardTypeStr.UTF8String, &pos, 10);
+    if (pos == NULL || !strlen(pos)) {
+        return keyboard;
+    } else {
+        return UIKeyboardTypeDefault;
+    }
 }
 
 - (UITextAutocapitalizationType)autocapitalizationType {
