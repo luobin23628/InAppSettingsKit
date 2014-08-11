@@ -511,7 +511,6 @@ CGRect IASKCGRectSwap(CGRect rect);
 		} else {
 			toggleState = specifier.defaultBoolValue;
 		}
-<<<<<<< HEAD
 		IASKSwitch *toggle = (IASKSwitch*)cell.accessoryView;
 		toggle.on = toggleState;
 		toggle.key = specifier.key;
@@ -524,30 +523,6 @@ CGRect IASKCGRectSwap(CGRect rect);
 	else if ([specifier.type isEqualToString:kIASKPSTitleValueSpecifier]) {
 		cell.textLabel.text = specifier.title;
 		id value = [self.settingsStore objectForKey:specifier.key] ? : specifier.defaultValue;
-=======
-		[[cell toggle] setOn:toggleState];
-		
-        [[cell toggle] addTarget:self action:@selector(toggledValue:) forControlEvents:UIControlEventValueChanged];
-        [[cell toggle] setKey:key];
-        return cell;
-    }
-    else if ([[specifier type] isEqualToString:kIASKPSMultiValueSpecifier]) {
-        UITableViewCell *cell = [[[IASKPSTitleValueSpecifierViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kIASKPSMultiValueSpecifier] autorelease];
-        [[cell textLabel] setText:[specifier title]];
-		[[cell detailTextLabel] setText:[[specifier titleForCurrentValue:[[NSUserDefaults standardUserDefaults] objectForKey:key] != nil ? 
-										 [[NSUserDefaults standardUserDefaults] objectForKey:key] : [specifier defaultValue]] description]];
-		
-		[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-
-        return cell;
-    }
-    else if ([[specifier type] isEqualToString:kIASKPSTitleValueSpecifier]) {
-        UITableViewCell *cell = [[[IASKPSTitleValueSpecifierViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kIASKPSTitleValueSpecifier] autorelease];
-        cell.textLabel.text = [specifier title];
-		id value = [[NSUserDefaults standardUserDefaults] objectForKey:key];
-		if (value == nil) value = [specifier defaultValue];
->>>>>>> 3dbc5f630f9bf914100a99fcb10b56d73e765f77
-		
 		NSString *stringValue;
 		if (specifier.multipleValues || specifier.multipleTitles) {
 			stringValue = [specifier titleForCurrentValue:value];
