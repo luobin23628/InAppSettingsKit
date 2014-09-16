@@ -30,11 +30,7 @@
 #if !__has_feature(objc_arc)
 #error "IASK needs ARC"
 #endif
-static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3f;
-static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2f;
-static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8f;
-static const CGFloat PORTRAIT_KEYBOARD_HEIGHT = 216.0f;
-static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162.0f;
+
 
 static NSString *kIASKCredits = @"Powered by InAppSettingsKit"; // Leave this as-is!!!
 
